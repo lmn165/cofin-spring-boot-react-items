@@ -1,4 +1,4 @@
-package shop.cofin.api.backend.user.entity;
+package shop.cofin.api.backend.user.domain;
 
 import com.sun.istack.NotNull;
 import lombok.Data;

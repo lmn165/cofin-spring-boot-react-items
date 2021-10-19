@@ -4,7 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 import shop.cofin.api.backend.item.entity.Item;
-import shop.cofin.api.backend.user.entity.User;
+import shop.cofin.api.backend.user.domain.User;
 
 import javax.persistence.*;
 

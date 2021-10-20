@@ -3,7 +3,7 @@ package shop.cofin.api.backend.user.domain;
 import com.sun.istack.NotNull;
 import lombok.Data;
 import org.springframework.stereotype.Component;
-import shop.cofin.api.backend.board.entity.Article;
+import shop.cofin.api.backend.board.domain.Article;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class User {
     @Column(length = 50) @NotNull private String name;
     @Column(length = 50) @NotNull private String email;
     @Column(name = "reg_date", length = 20) @NotNull private String regDate;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Article> articleList = new ArrayList<>();
 
 }

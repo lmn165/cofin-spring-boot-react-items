@@ -1,9 +1,9 @@
-package shop.cofin.api.backend.board.entity;
+package shop.cofin.api.backend.board.domain;
 
 import com.sun.istack.NotNull;
 import lombok.Data;
 import org.springframework.stereotype.Component;
-import shop.cofin.api.backend.item.entity.Item;
+import shop.cofin.api.backend.item.domain.Item;
 import shop.cofin.api.backend.user.domain.User;
 
 import javax.persistence.*;

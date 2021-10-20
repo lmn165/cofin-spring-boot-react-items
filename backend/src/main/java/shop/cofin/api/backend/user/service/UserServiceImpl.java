@@ -18,7 +18,7 @@ public final class UserServiceImpl implements UserService{
     }
 
     @Override
-    public String login(String username, String password) {
+    public Optional<User> login(String username, String password) {
         return userRepository.login(username, password);
     }
 }

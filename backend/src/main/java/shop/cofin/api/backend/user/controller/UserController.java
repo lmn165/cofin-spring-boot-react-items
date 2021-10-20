@@ -21,10 +21,24 @@ public final class UserController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final UserServiceImpl userService;
 
+    @PostMapping("/join")
+    public ResponseEntity<Optional<User>> join(@RequestBody UserDto user){
+        logger.info(String.format("User Join Info is %s", user.toString()));
+        User u = new User();
+        u.setUserId((long)3);
+        u.setUsername(user.getUsername());
+        u.setEmail(user.getEmail());
+        u.setName(user.getName());
+        u.setPassword(user.getPassword());
+        u.setRegDate(user.getRegDate());
+        userService.join(u);
+        return null;
+    }
+
     @PostMapping("/login")
-    public ResponseEntity<Optional<User>> login(@RequestBody UserDto user){
-        return new ResponseEntity<>(
-                userService.login(user.getUsername(), user.getPassword()), HttpStatus.OK);
+    public ResponseEntity<User> login(@RequestBody UserDto user){
+//        return new ResponseEntity<>(userService.login(user.getUsername(), user.getPassword()), HttpStatus.OK);
+        return ResponseEntity.ok(userService.login(user.getUsername(), user.getPassword()).get());
     }
 
     @GetMapping("/{id}")

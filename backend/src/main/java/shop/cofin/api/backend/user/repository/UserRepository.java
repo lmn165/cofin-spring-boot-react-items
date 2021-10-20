@@ -16,4 +16,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select u.user_id userId, u.username, u.name, u.email, u.password, u.reg_date regDate " +
             "from users u where u.username = :username and u.password = :password", nativeQuery = true)
     Optional<User> login(@Param("username") String username, @Param("password") String password);
+
+//    @Transactional
+//    @Query(value = "insert into users values(2, :email, :name, :password, :regDate, :username)", nativeQuery = true)
+//    Optional<User> join(@Param("username") String username, @Param("password") String password,
+//                        @Param("email") String email, @Param("name") String name, @Param("regDate") String regDate);
 }

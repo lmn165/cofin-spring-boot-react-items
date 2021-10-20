@@ -21,4 +21,9 @@ public final class UserServiceImpl implements UserService{
     public Optional<User> login(String username, String password) {
         return userRepository.login(username, password);
     }
+
+    @Override
+    public void join(User user) {
+        userRepository.save(user);
+    }
 }

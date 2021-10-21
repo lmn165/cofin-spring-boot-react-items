@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-
+import { useHistory } from 'react-router-dom'
 
 export default function UserAdd() {
     const SERVER = 'http://localhost:8080'
+    const history = useHistory()
     const [join, setJoin] = useState({
         username:'', password:'', email:'', name:'', regDate: new Date().toLocaleDateString()
     })
@@ -27,6 +28,7 @@ export default function UserAdd() {
         userJoin(joinRequest)
         .then(res =>{
             alert('회원가입 성공')
+            history.push('/login')
         })
         .catch(err => {
             console.log(`회원가입 실패 : ${err}`)

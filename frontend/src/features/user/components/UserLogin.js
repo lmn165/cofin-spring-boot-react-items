@@ -6,7 +6,7 @@ export default function UserLogin() {
   const SERVER = 'http://localhost:8080'
   const [login, setLogin] = useState({})
   const {username, password} = login
-  const history =useHistory()
+  const history = useHistory()
 
   const handleChange = e => {
     const {value, name} = e.target
@@ -27,7 +27,7 @@ export default function UserLogin() {
     .then(res => {
       alert('로그인 성공, '+JSON.stringify(res.data))
       localStorage.setItem('sessionUser', JSON.stringify(res.data))
-      history.push("/users/detail")
+      history.push("/detail")
     })
     .catch(err => {
       alert('로그인 실패', + err)

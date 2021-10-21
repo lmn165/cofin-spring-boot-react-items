@@ -31,28 +31,18 @@ public final class UserController implements CommonController<User, Long> {
         return ResponseEntity.ok(userService.login(user.getUsername(), user.getPassword()).get());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getById(@PathVariable long id) throws JsonProcessingException {
-        User user = userService.findById(id).get();
-        UserDto userDto = UserDto.builder()
-                .userId(user.getUserId())
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .name(user.getName())
-                .email(user.getEmail())
-                .regDate(user.getRegDate())
-                .build();
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
-    }
-
     @Override
     public ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userRepository.findAll());
     }
 
+    @GetMapping("/{id}")
     @Override
-    public ResponseEntity<User> getById(Long id) {
-        return ResponseEntity.ok(userRepository.getById(id));
+    public ResponseEntity<User> getById(@PathVariable Long id) {
+        System.out.println("id: " + id);
+        User u = userRepository.getById(id );
+        System.out.println(u.toString());
+        return ResponseEntity.ok(u);
     }
 
     @PostMapping("/join")

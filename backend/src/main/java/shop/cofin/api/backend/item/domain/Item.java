@@ -14,7 +14,7 @@ import java.util.List;
 public class Item {
     @Id
     @Column(name = "item_id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemId;
 
     @Column(name = "item_brand", length = 20) @NotNull private String itemBrand;

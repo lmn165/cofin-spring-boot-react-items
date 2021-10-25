@@ -5,7 +5,9 @@ import axios from 'axios';
 export default function UserDetail() {
   const SERVER = 'http://localhost:8080'
   const history = useHistory()  // history 는 이동할 때 사용하는 hook
-  const [detail, setDetail] = useState({})
+  const [detail, setDetail] = useState({
+    userId:'', username:'', password:'', email:'', name:'', regDate: new Date().toLocaleDateString()
+  })
 
   const fetchOne = () => {
     const sessionUser = JSON.parse(localStorage.getItem('sessionUser'))
@@ -13,7 +15,7 @@ export default function UserDetail() {
     // alert('pause!')
     axios.get(`${SERVER}/users/${sessionUser.userId}`)
     .then(res => {
-        alert(`회원정보 조회 성공: ${res.data}`)
+        // alert(`회원정보 조회 성공: ${res.data}`)
         setDetail(res.data)
     })
     .catch(err => {
@@ -23,6 +25,12 @@ export default function UserDetail() {
   useEffect(() => {
     fetchOne()
   }, [])
+
+  const logout = e => {
+    e.preventDefault()
+    localStorage.setItem('sessionUser','')
+    history.push('/')
+}
 
   return (
     <div>
@@ -49,7 +57,10 @@ export default function UserDetail() {
                 </label>
             </li>
             <li>
-                <input type="button" value="회원 정보 수정"/>
+                <input type="button" value="회원정보수정" onClick={()=> history.push('/modify')}/>
+            </li>
+            <li>
+            <input type="button" value="로그아웃" onClick={logout}/>
             </li>
         </ul>
     </div>

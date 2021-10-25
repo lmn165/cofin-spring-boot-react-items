@@ -31,6 +31,7 @@ public final class UserController implements CommonController<User, Long> {
         return ResponseEntity.ok(userService.login(user.getUsername(), user.getPassword()).get());
     }
 
+    @GetMapping()
     @Override
     public ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userRepository.findAll());
@@ -39,10 +40,10 @@ public final class UserController implements CommonController<User, Long> {
     @GetMapping("/{id}")
     @Override
     public ResponseEntity<User> getById(@PathVariable Long id) {
-        System.out.println("id: " + id);
-        User u = userRepository.getById(id );
-        System.out.println(u.toString());
-        return ResponseEntity.ok(u);
+//        System.out.println("id: " + id);
+//        User u = userRepository.getById(id );
+//        System.out.println(u.toString());
+        return ResponseEntity.ok(userRepository.getById(id));
     }
 
     @PostMapping("/join")
@@ -51,6 +52,13 @@ public final class UserController implements CommonController<User, Long> {
         logger.info(String.format("회원가입 정보 %s", user.toString()));
         userRepository.save(user);
         return ResponseEntity.ok("Save SUCCESS");
+    }
+
+    @PutMapping
+    public ResponseEntity<User> update(@RequestBody User user) {
+        logger.info(String.format("회원수정 정보: %s", user.toString()));
+        userRepository.save(user);
+        return ResponseEntity.ok(userRepository.getById(user.getUserId()));
     }
 
     @Override
@@ -68,9 +76,10 @@ public final class UserController implements CommonController<User, Long> {
         return ResponseEntity.ok(userRepository.count());
     }
 
+    @DeleteMapping("/{id}")
     @Override
-    public ResponseEntity<String> deleteById(Long id) {
+    public ResponseEntity<String> deleteById(@PathVariable Long id) {
         userRepository.deleteById(id);
-        return ResponseEntity.ok("Delete SUCCESS");
+        return ResponseEntity.ok("SUCCESS");
     }
 }

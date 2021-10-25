@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 export default function UserLogin() {
-  const SERVER = 'http://localhost:8080'
   const [login, setLogin] = useState({})
   const {username, password} = login
   const history = useHistory()
@@ -14,10 +12,6 @@ export default function UserLogin() {
       ...login,
       [name] : value
     })
-  }
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'JWT fefege..'
   }
   const changeNull = ls =>{
     for(const i of ls ){
@@ -46,7 +40,6 @@ export default function UserLogin() {
       changeNull(['username', 'password'])
     })
   }
-  const userLogin = loginRequest => axios.post(`${SERVER}/users/login`, JSON.stringify(loginRequest), {headers})
   return (
     <div>
       <h1>유저 로그인</h1>

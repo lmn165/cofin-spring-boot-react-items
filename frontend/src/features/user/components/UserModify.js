@@ -26,7 +26,7 @@ export default function UserModify() {
     const handleSubmit = e => {
         e.preventDefault()
         const modifyRequest = {...modify}
-        alert(`회원수정 정보: ${JSON.stringify(modifyRequest)}`)
+        // alert(`회원수정 정보: ${JSON.stringify(modifyRequest)}`)
         userModify(modifyRequest)
         .then(res =>{
             alert('회원 정보 수정 성공')

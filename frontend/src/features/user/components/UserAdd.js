@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom'
+import { userJoin } from '../reducer/userAPI'
 
 export default function UserAdd() {
     const history = useHistory()
@@ -18,7 +19,7 @@ export default function UserAdd() {
     const handleSubmit = e => {
         e.preventDefault()
         const joinRequest = {...join}
-        alert(`회원가입 정보: ${JSON.stringify(joinRequest)}`)
+        // alert(`회원가입 정보: ${JSON.stringify(joinRequest)}`)
         userJoin(joinRequest)
         .then(res =>{
             alert('회원가입 성공')

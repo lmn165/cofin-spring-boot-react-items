@@ -6,16 +6,16 @@ const headers = {
 }
 
 const userJoin = x => axios.post(`${SERVER}/users/join`, JSON.stringify(x), {headers})
-const userFetchOne = x => axios.get(`${SERVER}/users/${x.userId}`)
-const userFetchList = () => axios.get(`${SERVER}/users`)
+const userDetail = x => axios.get(`${SERVER}/users/${x.userId}`)
+const userList = () => axios.get(`${SERVER}/users`)
 const userLogin = x => axios.post(`${SERVER}/users/login`, JSON.stringify(x), {headers})
 const userModify = x => axios.put(`${SERVER}/users`, JSON.stringify(x),{headers})
 const userRemove = x => axios.delete(`${SERVER}/users/${x.userId}`)
 
 export default {
   userJoin,
-  userFetchOne,
-  userFetchList,
+  userDetail,
+  userList,
   userLogin,
   userModify,
   userRemove

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom'
-import { userJoin } from '../reducer/userAPI'
 
 export default function UserAdd() {
     const history = useHistory()
@@ -8,13 +7,15 @@ export default function UserAdd() {
         username:'', password:'', email:'', name:'', regDate: new Date().toLocaleDateString()
     })
     const {username, password, email, name, regDate} = join
-    const handleChange = e => {
-        const { value, name } = e.target
-        setJoin({
-            ...join,
-            [name]:  value
-        })
-    }
+    const handleChange = useCallback (
+        e => {
+            const{value, name} = e.target
+            setJoin({
+                ...join,
+                [name] :  value
+            })
+        }, [join]
+    )
     
     const handleSubmit = e => {
         e.preventDefault()

@@ -1,19 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import axios from 'axios';
 
 export default function UserDetail() {
-  const SERVER = 'http://localhost:8080'
   const history = useHistory()  // history 는 이동할 때 사용하는 hook
   const [detail, setDetail] = useState({
     userId:'', username:'', password:'', email:'', name:'', regDate: new Date().toLocaleDateString()
   })
 
-  const fetchOne = () => {
+  const userDetail  = () => {
     const sessionUser = JSON.parse(localStorage.getItem('sessionUser'))
-    alert(`사용자 아이디: ${sessionUser.userId}`)
+    // alert(`사용자 아이디: ${sessionUser.userId}`)
     // alert('pause!')
-    axios.get(`${SERVER}/users/${sessionUser.userId}`)
+    userDetail(sessionUser)
     .then(res => {
         // alert(`회원정보 조회 성공: ${res.data}`)
         setDetail(res.data)
@@ -23,7 +21,7 @@ export default function UserDetail() {
     })
   }
   useEffect(() => {
-    fetchOne()
+    userDetail ()
   }, [])
 
   const logout = e => {

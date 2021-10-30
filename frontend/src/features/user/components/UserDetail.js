@@ -1,34 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
+import { logout } from 'features/user/reducer/userSlice';
 
 export default function UserDetail() {
-  const history = useHistory()  // history 는 이동할 때 사용하는 hook
-  const [detail, setDetail] = useState({
-    userId:'', username:'', password:'', email:'', name:'', regDate: new Date().toLocaleDateString()
-  })
-
-  const userDetail  = () => {
-    const sessionUser = JSON.parse(localStorage.getItem('sessionUser'))
-    // alert(`사용자 아이디: ${sessionUser.userId}`)
-    // alert('pause!')
-    userDetail(sessionUser)
-    .then(res => {
-        // alert(`회원정보 조회 성공: ${res.data}`)
-        setDetail(res.data)
-    })
-    .catch(err => {
-        alert(`조회 실패: ${err}`)
-    })
-  }
-  useEffect(() => {
-    userDetail ()
-  }, [])
-
-  const logout = e => {
-    e.preventDefault()
-    localStorage.setItem('sessionUser','')
-    history.push('/')
-}
+  const detail = JSON.parse(window.localStorage.getItem('sessionUser'))
+  const dispatch = useDispatch()
+  const history = useHistory()
 
   return (
     <div>
@@ -58,7 +36,7 @@ export default function UserDetail() {
                 <input type="button" value="회원정보수정" onClick={()=> history.push('/modify')}/>
             </li>
             <li>
-            <input type="button" value="로그아웃" onClick={logout}/>
+            <input type="button" value="로그아웃" onClick={dispatch(logout())}/>
             </li>
         </ul>
     </div>

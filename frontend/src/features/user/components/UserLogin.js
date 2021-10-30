@@ -1,60 +1,53 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { loginPage } from 'features/user/reducer/userSlice'
+import { useForm } from 'react-hook-form'
+import styled from 'styled-components'
 
 export default function UserLogin() {
-  const [login, setLogin] = useState({})
-  const {username, password} = login
-  const history = useHistory()
-
-  const handleChange = e => {
-    const {value, name} = e.target
-    setLogin({
-      ...login,
-      [name] : value
-    })
-  }
-  const changeNull = ls =>{
-    for(const i of ls ){
-      document.getElementById(i).value = ''
-    }
-  }
-  const handleClick = e =>{
-    e.preventDefault()
-    e.stopPropagation()
-    const loginRequest = {username, password}
-    // alert('로그인정보'+JSON.stringify(loginRequest))
-    /*
-    userLogin(loginRequest)
-    .then(res => {
-      const user = res.data;
-      if(user.username != null){
-        alert('로그인 성공, '+JSON.stringify(res.data))
-        localStorage.setItem('sessionUser', JSON.stringify(res.data))
-        history.push("/detail")
-      }else{
-        alert('아이디, 비번 오류로 로그인 실패')
-        changeNull(['username', 'password'])
-      }
-    })
-    .catch(err => {
-      alert('접속 실패', + err)
-      changeNull(['username', 'password'])
-    })
-    */
-  }
+  const dispatch =useDispatch()
+  const { register, handleSubmit, formState: { errors } } = useForm();
   return (
     <div>
       <h1>유저 로그인</h1>
-      <form method="POST">
+      <form method="POST"
+      onSubmit={
+        handleSubmit(async(data) => await dispatch(loginPage(data)))
+      }>
         <ul>
           <li><label for="id">아이디</label>
           <input type="text" id="username"
-              name="username" value={username} onChange={handleChange}/></li>
+              name="username" 
+              aria-invalid={errors.username ? "true" : "false"}
+              {...register('username', { required: true, maxLength: 5 })}/>
+              {errors.username && errors.username.type === "required" && (
+                <Span role="alert">This is required</Span>
+              )}
+              {errors.username && errors.username.type === "maxLength" && (
+                <Span role="alert">Max length exceeded</Span>
+              )}
+              </li>
           <li><label for="pw">비밀번호</label>
-          <input type="password" id="password" name="password" onChange={handleChange}/></li>
-          <li><input type="button" title="로그인" value="로그인" onClick={handleClick}/></li>
+          <input type="password" id="password" name="password" 
+          aria-invalid={errors.password ? "true" : "false"}
+          {...register('password', { required: true, maxLength: 30 })}/>
+          {errors.password && errors.password.type === "required" && (
+            <Span role="alert">This is required</Span>
+          )}
+          {errors.password && errors.password.type === "maxLength" && (
+            <Span role="alert">Max length exceeded</Span>
+          )}
+          </li>
+          <li><input type="button" title="로그인" value="로그인"/></li>
         </ul>
       </form>
     </div>
   );
 }
+
+
+const Span = styled.span`
+    color: red;
+    font-weight: bold;
+`

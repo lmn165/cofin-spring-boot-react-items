@@ -2,69 +2,65 @@ import React, { useState, useCallback } from 'react';
 import { useHistory  } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { joinPage } from 'features/user/reducer/userSlice'
+import { useForm } from 'react-hook-form'
+import styled from 'styled-components'
 
 
 export default function UserAdd() {
-    const history = useHistory()
     const dispatch = useDispatch()
-    const [join, setJoin] = useState({
-        username:'', password:'', email:'', name:'', regDate: new Date().toLocaleDateString()
-    })
-    const {username, password, email, name} = join
-    const handleChange = useCallback(
-        e => {
-            const { value, name } = e.target
-            setJoin({
-                ...join,
-                [name] : value
-            })
-        }, [join]
-    ) 
-    
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-
-        const json = {
-            'username': join.username,
-            'password': join.password,
-            'email': join.email,
-            'name': join.name,
-            'regDate': join.regDate
-        }
-
-        // alert(`회원가입 정보: ${JSON.stringify(json)}`)
-        await dispatch(joinPage(json))
-        alert(`${join.username} 회원가입 환영`)
-        history.push('/login')
-
-  }
-
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    // history.push('/login')
   return (
     <div>
          <h1>회원 가입을 환영합니다.</h1>
-    <form onSubmit={handleSubmit} method='POST'>
+    <form method='POST' onSubmit={
+        handleSubmit(async(data) => await dispatch(joinPage({...data, 
+                                    regDate: new Date().toLocaleDateString()}))
+                                    )}>
         <ul>
             <li>
                 <label>
-                    아이디 : <input type="text" id="username" name="username" value={username} onChange={handleChange}
-                    size="10" minlength="4" maxlength="15"/>
+                    아이디 : <input type="text" id="username" name="username"
+                    aria-invalid={errors.username ? "true" : "false"}
+                    {...register('username', { required: true, maxlength: 10})}
+                    />
+                    {errors.username && errors.username.type === "required" && (
+                      <Span role="alert">This is required</Span>
+                    )}
+                    {errors.username && errors.username.type === "maxLength" && (
+                      <Span role="alert">Max length exceeded</Span>
+                    )}
                 </label>
-                <small>4~15자리 이내의 영문과 숫자</small>
+                <small>1~15자리 이내의 영문과 숫자</small>
             </li>
             <li>
                 <label>
-                    이메일 : <input type="email" id="email" name="email" value={email} onChange={handleChange}/>
+                    이메일 : <input type="email" id="email" name="email"
+                    aria-invalid={errors.email ? "true" : "false"}
+                    {...register('email', { required: true, maxLength: 30 })}
+                  />
                 </label>
             </li>
             <li>
                 <label>
-                    비밀 번호 : <input type="password" id="password" name="password" value={password} onChange={handleChange}/>
+                    비밀 번호 : <input type="password" id="password" name="password" 
+                    aria-invalid={errors.password ? "true" : "false"}
+                    {...register('password', { required: true, maxLength: 30 })}
+                  />
+                  {errors.password && errors.password.type === "required" && (
+                    <Span role="alert">This is required</Span>
+                  )}
+                  {errors.password && errors.password.type === "maxLength" && (
+                    <Span role="alert">Max length exceeded</Span>
+                  )}
                 </label>
             </li>
             <li>
                 <label>
-                    이름 : <input type="text" id="name" name="name" value={name} onChange={handleChange}/>
+                    이름 : <input type="text" id="name" name="name" 
+                    aria-invalid={errors.name ? "true" : "false"}
+                    {...register('name', { required: true, maxLength: 30 })}
+                    />
                 </label>
             </li>
            
@@ -77,3 +73,8 @@ export default function UserAdd() {
     </div>
   );
 }
+
+const Span = styled.span`
+    color: red;
+    font-weight: bold;
+`

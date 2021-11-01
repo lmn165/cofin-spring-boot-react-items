@@ -1,27 +1,27 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { userAPI } from 'features/user';
 
-const userJoinPage = async(x) => {
+const userJoinPage = async (x) => {
    const res = await userAPI.userJoin(x)
    return res.data
 }
-const userDetailPage = async(x) => {
+const userDetailPage = async (x) => {
   const res = await userAPI.userDetail(x)
   return res.data
 }
-const userListPage = async() => {
+const userListPage = async () => {
   const res = await userAPI.userList()
   return res.data
 }
-const userLoginPage = async(x) => {
+const userLoginPage = async (x) => {
   const res = await userAPI.userLogin(x) 
   return res.data
 }
-const userModifyPage = async(x) => {
+const userModifyPage = async (x) => {
   const res = await userAPI.userModify(x)
   return res.data
 }
-const userRemovePage = async(x) => {
+const userRemovePage = async (x) => {
   const res = await userAPI.userRemove(x)
   return res.data
 }
@@ -32,10 +32,10 @@ export const listPage = createAsyncThunk('users/list', userListPage)
 export const loginPage = createAsyncThunk('users/login', userLoginPage)
 export const modifyPage = createAsyncThunk('users/modify', userModifyPage)
 export const removePage = createAsyncThunk('users/remove', userRemovePage)
-export const logout = () => {
-  window.localStorage.setItem('sessionUser','')
-  window.location.href='/home'
-}
+// export const logout = () => {
+  // window.localStorage.setItem('sessionUser','')
+  // window.location.href='/home'
+// }
 
 const changeNull = ls =>{
   for(const i of ls ){
@@ -55,17 +55,17 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: {
     [joinPage.fulfilled]: ( state, action ) => { 
-      state.userState = action.payload
-      window.location.href = `/users/login` 
+      state.userState = action.payload 
+      window.location.href = `/login`
     },
-    [detailPage.fulfilled]: ( state, {meta, payload} ) => { state.userState = payload},
-    [listPage.fulfilled]: ( state, {meta, payload} ) => { state.pageResult = payload },
+    [detailPage.fulfilled]: ( state, {meta, payload} ) => { state.userState = payload },
+    [listPage.fulfilled]: ( state, {meta, payload} ) => { state.userState = payload },
     [loginPage.fulfilled]: ( state, {meta, payload} ) => {
       state.userState = payload
       window.localStorage.setItem('sessionUser', JSON.stringify(payload))
       if(payload.username != null){
         alert(`${payload.name}님 환영합니다`)
-        window.location.href = `/detail` 
+        window.location.href = `/detail`
       }else{
         alert('아이디, 비번 오류로 로그인 실패  ')
         changeNull(['username','password'])

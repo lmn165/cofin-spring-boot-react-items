@@ -5,6 +5,7 @@ export default function Navigation (){
     return (<>
         <div class="navi">
             <ul>
+                <li><Link to='/'>Home</Link></li>
                 <li><Link to='/add'>add</Link></li>
                 <li><Link to='/detail'>detail</Link></li>
                 <li><Link to='/list'>list</Link></li>

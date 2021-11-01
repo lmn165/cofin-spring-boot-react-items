@@ -31,6 +31,7 @@ public final class UserController implements CommonController<User, Long> {
         return ResponseEntity.ok(userService.login(user.getUsername(), user.getPassword()).get());
     }
 
+    @GetMapping
     @Override
     public ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userRepository.findAll());

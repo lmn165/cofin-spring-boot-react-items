@@ -1,9 +1,12 @@
 import axios from 'axios';
 import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory  } from 'react-router-dom';
+import { modifyPage } from '../reducer/userSlice';
 
 export default function UserModify() {
     const history = useHistory()
+    const dispatch = useDispatch()
     const sessionUser = JSON.parse(localStorage.getItem('sessionUser')); 
     const [modify, setModify] = useState({
         userId: sessionUser.userId,
@@ -21,33 +24,18 @@ export default function UserModify() {
                 [name] : value
             })
         }
-    const headers = {
-        'Content-Type' : 'application/json',
-        'Authorization': 'JWT fefege..'
-        }
-    const handleSubmit = useCallback(
-        e => {
-            e.preventDefault()
-            const modifyRequest = {...modify}
-            // alert(`회원수정 정보: ${JSON.stringify(modifyRequest)}`)
-            axios
-            .put(`http://localhost:8080/users`, JSON.stringify(modifyRequest), {headers})
-            .then(res =>{
-                alert('회원 정보 수정 성공')
-                localStorage.setItem('sessionUser', JSON.stringify(res.data))
-                history.push("/detail")
-            })
-            .catch(err =>{
-                alert(`회원수정 실패 : ${err}`)
-            })
-            
-        }
-    )
-
   return (
     <div>
          <h1>회원정보 수정</h1>
-    <form onSubmit={handleSubmit} method='PUT'>
+    <form onSubmit={
+        useCallback(
+            e => {
+                e.preventDefault()
+                dispatch(modifyPage({...modify}))
+                // alert(`회원수정 정보: ${JSON.stringify(modifyRequest)}`)
+            }
+        )
+    } method='PUT'>
         <ul>
             <li>
               <label>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { UserListForm } from '..';
 import { listPage } from 'features/user/reducer/userSlice';
 
@@ -8,12 +8,8 @@ export default function UserList() {
   const [list, setList] = useState([])
   const dispatch = useDispatch()
  
-  const userList = async () => {
-    await dispatch(listPage())
-  }
-
-  useEffect(() =>{
-    userList() 
+  useEffect(() => {
+    dispatch(listPage())
   }, [])
   return (
     <div>

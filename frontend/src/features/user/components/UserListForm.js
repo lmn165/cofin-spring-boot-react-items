@@ -1,6 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { listPage } from '../reducer/userSlice'
 
-const UserListForm = ({list}) => {
+const UserListForm = () => {
+    const dispatch = useDispatch()
+    // const users = useSelector(state => state.userReducer.userState)
+    const users = useSelector(state => state.userReducer.userState)
+    useEffect(() => {
+        // dispatch(listPage())
+    }, [users])
     return (<table border='1px' style={{textAlign:'center'}}>
     <thead>
     <tr><th>사용자번호</th>
@@ -9,7 +17,7 @@ const UserListForm = ({list}) => {
         <th>이메일</th></tr>
     </thead>
     <tbody>
-    {list.map((user)=>(
+     {users.map((user)=>( 
         <tr><td>{user.userId}</td>
         <td>{user.username}</td>
         <td>{user.name}</td>

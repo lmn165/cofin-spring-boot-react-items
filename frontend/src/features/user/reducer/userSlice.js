@@ -72,8 +72,10 @@ const userSlice = createSlice({
       }
     },
     [modifyPage.fulfilled]: ( state, action ) => { 
-      state.userState = action.payload 
+      // state.userState = action.payload 
+      alert(`회원 정보 수정 성공 ${action.data}`)
       window.localStorage.setItem('sessionUser', JSON.stringify(action.payload))
+      window.location.href = `/detail`
     },
     [removePage.fulfilled]: ( state, {meta, payload }) => { 
       state.userState = payload

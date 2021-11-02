@@ -5,7 +5,7 @@ import { Route, Redirect, Switch } from 'react-router-dom'
 
 export default function App() {
   return (<>
-  <Navigation/>
+  <Navigation/><br/>
     <Switch>
       <Route exact path='/' component = { Home }/>
       <Redirect from='/home' to = { '/' }/>

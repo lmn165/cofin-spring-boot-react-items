@@ -1,11 +1,11 @@
 import React from 'react';
 import { Navigation, Home } from 'features/common'
 import { UserAdd, UserDetail, UserList, UserLogin, UserModify, UserRemove} from 'features/user'
-import { Route, Redirect, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 
 export default function App() {
   return (<>
-  <Navigation/><br/>
+  <Router>
     <Switch>
       <Route exact path='/' component = { Home }/>
       <Redirect from='/home' to = { '/' }/>
@@ -17,5 +17,6 @@ export default function App() {
       <Route exact path='/modify' component= { UserModify }/>
       <Route exact path='/remove' component= { UserRemove }/>
     </Switch>
+  </Router>
   </>);
 }

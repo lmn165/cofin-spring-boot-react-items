@@ -1,17 +1,17 @@
-import React, { useState, useCallback } from 'react';
-import { useHistory  } from 'react-router-dom';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import { joinPage } from 'features/user/reducer/userSlice'
+import { exist, joinPage } from 'features/user/reducer/userSlice'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
-
+import Layout from 'features/common/components/Layout';
 
 export default function UserAdd() {
     const dispatch = useDispatch()
     const { register, handleSubmit, formState: { errors } } = useForm();
     // history.push('/login')
   return (
-    <div>
+    <Layout>
+    <Main>
          <h1>회원 가입을 환영합니다.</h1>
     <form method='POST' onSubmit={
         handleSubmit(async(data) => await dispatch(joinPage({...data, 
@@ -30,6 +30,8 @@ export default function UserAdd() {
                     {errors.username && errors.username.type === "maxLength" && (
                       <Span role="alert">Max length exceeded</Span>
                     )}
+                    <button onClick={() => dispatch(
+                            exist(document.getElementById('username').value))}>중복체크</button>
                 </label>
                 <small>1~15자리 이내의 영문과 숫자</small>
             </li>
@@ -70,11 +72,16 @@ export default function UserAdd() {
 
         </ul>
     </form>
-    </div>
+    </Main>
+    </Layout>
   );
 }
-
 const Span = styled.span`
-    color: red;
-    font-weight: bold;
+    color: red
+`
+const Main = styled.div`
+width: 500px;
+margin: 0 auto;
+text-decoration:none
+text-align: center;
 `

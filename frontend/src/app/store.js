@@ -4,10 +4,10 @@ import {
   getDefaultMiddleware
 } from '@reduxjs/toolkit'
 import logger from 'redux-logger'
-import counterReducer from 'features/counter/counterSlice';
-import { userReducer } from 'features/user'
+// import counterReducer from 'features/counter/counterSlice';
+import { user } from 'features/user'
 
-const rootReducer = combineReducers({userReducer})
+const rootReducer = combineReducers({user})
 
 export const store = configureStore({
   reducer: rootReducer,

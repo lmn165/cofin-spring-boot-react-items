@@ -46,6 +46,12 @@ public final class UserController implements CommonController<User, Long> {
         return ResponseEntity.ok(userRepository.getById(id));
     }
 
+    @GetMapping("/list/{page}")
+    public ResponseEntity<List<User>> getList(@PathVariable int page) {
+//        System.out.println("::::::: PageNumber :::::::: "+page);
+        return ResponseEntity.ok(userRepository.findAll());
+    }
+
     @PostMapping("/join")
     @Override
     public ResponseEntity<String> save(@RequestBody User user) {
@@ -67,8 +73,17 @@ public final class UserController implements CommonController<User, Long> {
     }
 
     @Override
-    public ResponseEntity<Boolean> existsById(Long id) {
-        return ResponseEntity.ok(userRepository.existsById(id));
+    @GetMapping("/existsById/{id}")
+    public ResponseEntity<Boolean> existsById(@PathVariable Long id) {
+        System.out.println(" id " + id);
+        boolean b = userRepository.existsById(id);
+        System.out.println(" Exist : "+b);
+        return ResponseEntity.ok(b);
+    }
+
+    @GetMapping("/exist/{username}")
+    public ResponseEntity<Boolean> exist(@PathVariable String username) {
+        return ResponseEntity.ok(userRepository.existsByUsername(username));
     }
 
     @Override
@@ -82,4 +97,5 @@ public final class UserController implements CommonController<User, Long> {
         userRepository.deleteById(id);
         return ResponseEntity.ok("SUCCESS");
     }
+
 }

@@ -1,8 +1,9 @@
-import axios from 'axios';
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory  } from 'react-router-dom';
 import { modifyPage } from '../reducer/userSlice';
+import Layout from 'features/common/components/Layout';
+import styled from 'styled-components'
 
 export default function UserModify() {
     const history = useHistory()
@@ -25,7 +26,8 @@ export default function UserModify() {
             })
         }
   return (
-    <div>
+      <Layout>
+    <Main>
          <h1>회원정보 수정</h1>
     <form onSubmit={
         useCallback(
@@ -75,6 +77,13 @@ export default function UserModify() {
 
         </ul>
     </form>
-    </div>
+    </Main>
+    </Layout>
   );
 }
+const Main = styled.div`
+width: 500px;
+margin: 0 auto;
+text-decoration:none
+text-align: center;
+`

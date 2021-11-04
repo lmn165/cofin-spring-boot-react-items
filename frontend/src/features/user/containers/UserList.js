@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { UserListForm } from '..';
-import { listPage } from 'features/user/reducer/userSlice';
+import React from 'react';
+import Layout from 'features/common/components/Layout';
+import styled from "styled-components";
+import { UserListForm } from '..'
 
 
-export default function UserList() {
-  const [list, setList] = useState([])
-  const dispatch = useDispatch()
- 
-  useEffect(() => {
-    dispatch(listPage())
-  }, [])
-  return (
-    <div>
-      <h1>사용자 목록</h1>
-      <UserListForm list={list}/>
-    </div>
-  );
+export default function UserList(){
+  return(
+    <Layout>
+        <Main><UserListForm/></Main>
+    </Layout>)
 }
+
+const Main = styled.div`
+width: 500px;
+margin: 0 auto;
+text-decoration:none
+text-align: center;
+`

@@ -1,30 +1,30 @@
-import React from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom'
-import styled from 'styled-components'
+import styled from "styled-components";
 
-export default function Navigation (){
-    return (<>
-        <div class="navi">
-            <Ul>
-                <Li><Link to='/'>Home</Link></Li>
-                <Li><Link to='/add'>add</Link></Li>
-                <Li><Link to='/detail'>detail</Link></Li>
-                <Li><Link to='/list'>list</Link></Li>
-                <Li><Link to='/login'>login</Link></Li>
-                <Li><Link to='/modify'>modify</Link></Li>
-                <Li><Link to='/remove'>remove</Link></Li>
-            </Ul>
-        </div>
-</>)
+const Navigation = () => {
+  
+  return (
+    <div>
+        <Ul>
+            <Li><Link to="/home" style={{ textDecoration: 'none' }}>Home</Link></Li>
+            {localStorage.length > 0 ? <></>
+              : <Li><Link to="/add" style={{ textDecoration: 'none' }}>UserAdd</Link></Li>}
+            <Li><Link to="/detail" style={{ textDecoration: 'none' }}>UserDetail</Link></Li>
+            <Li><Link to="/list" style={{ textDecoration: 'none' }}>UserList</Link></Li>
+            {localStorage.length > 0 ? <></>
+             : <Li><Link to="/login" style={{ textDecoration: 'none' }}>UserLogin</Link></Li>}
+            <Li><Link to="/modify" style={{ textDecoration: 'none' }}>UserModify</Link></Li>
+            <Li><Link to="/remove" style={{ textDecoration: 'none' }}>UserRemove</Link></Li>
+        </Ul>
+    </div>
+  );
 }
-
 
 const Ul = styled.ul`
 background-color: #FFDAB9;
 text-decoration:none
 text-align: center;
-
-
 `
 const Li = styled.li`
 float: left;
@@ -32,4 +32,7 @@ margin-left: 1em;
 font-size:20px;
 text-align:center;
 display:inline-block;
+
 `
+
+export default Navigation

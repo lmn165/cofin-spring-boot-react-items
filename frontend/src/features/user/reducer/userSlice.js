@@ -5,12 +5,16 @@ const userJoinPage = async (x) => {
    const res = await userAPI.userJoin(x)
    return res.data
 }
+const EXIST = async (x) => {
+  const res = await userAPI.exist(x)
+  return res.data
+}
 const userDetailPage = async (x) => {
   const res = await userAPI.userDetail(x)
   return res.data
 }
-const userListPage = async () => {
-  const res = await userAPI.userList()
+const userListPage = async ({page}) => {
+  const res = await userAPI.userList(page)
   return res.data
 }
 const userLoginPage = async (x) => {
@@ -27,6 +31,7 @@ const userRemovePage = async (x) => {
 }
 
 export const joinPage = createAsyncThunk('users/join', userJoinPage)
+export const exist = createAsyncThunk('users/exist', EXIST)
 export const detailPage = createAsyncThunk('users/dtail', userDetailPage)
 export const listPage = createAsyncThunk('users/list', userListPage)
 export const loginPage = createAsyncThunk('users/login', userLoginPage)
@@ -48,6 +53,7 @@ const userSlice = createSlice({
     userState: {
       username:'', password:'', email:'', name:'', regDate: ''
     },
+    usersState: [],
     type: '',
     keyword: '',
     params: {}
@@ -58,8 +64,12 @@ const userSlice = createSlice({
       state.userState = action.payload 
       window.location.href = `/login`
     },
+    [exist.fulfilled]: ( state, action ) => { 
+      if(action.payload){window.location.href='/add'}
+      else{ alert(`사용가능함`) }
+    },
     [detailPage.fulfilled]: ( state, {meta, payload} ) => { state.userState = payload },
-    [listPage.fulfilled]: ( state, {meta, payload} ) => { state.userState = payload },
+    [listPage.fulfilled]: ( state, {meta, payload} ) => { state.usersState = payload },
     [loginPage.fulfilled]: ( state, {meta, payload} ) => {
       state.userState = payload
       window.localStorage.setItem('sessionUser', JSON.stringify(payload))
@@ -78,12 +88,14 @@ const userSlice = createSlice({
       window.location.href = `/detail`
     },
     [removePage.fulfilled]: ( state, {meta, payload }) => { 
-      state.userState = payload
-      window.localStorage.setItem('sessionUser', '')
+      window.localStorage.removeItem('sessinUser')
+      window.localStorage.clear()
+      window.location.href = '/home'
     }
   }
 
 })
 export const currentUserState = state => state.users.userState
+export const currentUsersState = state => state.users.usersState
 export const currentUserParam = state => state.users.param
 export default userSlice.reducer;

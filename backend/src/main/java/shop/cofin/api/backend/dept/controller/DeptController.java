@@ -2,30 +2,35 @@ package shop.cofin.api.backend.dept.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import shop.cofin.api.backend.common.CommonController;
 import shop.cofin.api.backend.dept.domain.Dept;
-import shop.cofin.api.backend.dept.domain.DeptDto;
+import shop.cofin.api.backend.dept.domain.DeptInfo;
 import shop.cofin.api.backend.dept.repository.DeptRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin("*")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/emp")
+@RequestMapping("/dept")
 public class DeptController implements CommonController<Dept, Long> {
 
-    private DeptRepository deptRepository;
+    private final DeptRepository deptRepository;
 
-    @GetMapping("/find-employees-by-dept-no/{count}")
-    public ResponseEntity<Optional<List<DeptDto>>> findDeptsByEmpCount(@PathVariable int count){
-        return ResponseEntity.ok(deptRepository.findDeptsByEmpCount(count));
+    @GetMapping("/find-depts-by-emp-count/{count}")
+    public ResponseEntity<List<DeptInfo>> findDeptsByEmpCount(@PathVariable int count){
+        return ResponseEntity.ok(deptRepository
+                .findEmployeesByDeptNo(count)
+                .orElse(new ArrayList<>()));
     }
 
+    @GetMapping("/find-dept-which-has-max-emp-count")
+    public ResponseEntity<List<DeptInfo>> findDeptWhichHasMaxEmpCount(){
+        return ResponseEntity.ok(deptRepository.findDeptWhichHasMaxEmpCount());
+    }
 
     @Override
     public ResponseEntity<List<Dept>> findAll() {
